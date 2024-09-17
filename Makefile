@@ -11,7 +11,7 @@ SRCS = main.c
 OBJS = $(SRCS:.c=.o)
 
 # Executable name
-TARGET = ./out/out.exe
+TARGET = ./main.exe
 
 # Default target
 all: $(TARGET)
@@ -27,3 +27,8 @@ $(TARGET): $(OBJS)
 # Clean up object files and executable
 clean:
 	del /Q $(OBJS) $(TARGET)
+	
+
+# Run the executable
+run: $(TARGET)
+	$(TARGET)
