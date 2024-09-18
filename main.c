@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <windows.h>
 
-#define Num_Students 30
+#define Num_Students 3
 
 typedef struct
 {
@@ -96,9 +97,9 @@ void print_student(Student student[], int num_students)
 
 int main()
 {
+    SetConsoleOutputCP(CP_UTF8);
+    printf("中文\n");
     Student student[Num_Students];
-    Student top_student;
-    float highest_score = -1;
     int i;
     for (i = 0; i < Num_Students; ++i)
     {
