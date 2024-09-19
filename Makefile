@@ -2,7 +2,7 @@
 CC = gcc
 
 # Compiler flags
-CFLAGS = -Wall -Wextra
+CFLAGS = -Wall -Wextra -Wno-unused-parameter -Wno-format
 
 # Source files
 SRCS = main.c
