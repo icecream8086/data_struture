@@ -1,6 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+void beauty_print()
+{
+    char line[81] = "";
+    for (int i = 0; i < 80; i++)
+    {
+        line[i] = '*';
+    }
+    printf("%s\n", line);
+}
+
 typedef struct student
 {
     int id;
@@ -26,7 +36,7 @@ void input_studnets(Student *s)
     printf("name\n");
     scanf("%s", &(s->name));
     printf("成绩\n");
-    scanf("%f%f%f", &(s->score1), &(s->score2), &(s->score3));
+    scanf("%f %f %f", &(s->score1), &(s->score2), &(s->score3));
     s->average = (s->score1 + s->score2 + s->score3) / 3;
 }
 
@@ -42,6 +52,7 @@ void find_max_average_student(Student *head)
             max_student = current;
         }
         current = current->next;
+        beauty_print();
         printf("最高分学生信息：\n");
         printf("学号：%d\n", max_student->id);
         printf("姓名：%s\n", max_student->name);
@@ -49,6 +60,7 @@ void find_max_average_student(Student *head)
         printf("成绩1：%f\n", max_student->score1);
         printf("成绩2：%f\n", max_student->score2);
         printf("成绩3：%f\n", max_student->score3);
+        beauty_print();
     }
 }
 
@@ -64,6 +76,7 @@ void find_highest_aveage_score(Student *head)
             max_student = current;
         }
         current = current->next;
+        beauty_print();
         printf("最高分学生信息：\n");
         printf("学号：%d\n", max_student->id);
         printf("姓名：%s\n", max_student->name);
@@ -71,6 +84,7 @@ void find_highest_aveage_score(Student *head)
         printf("成绩1：%f\n", max_student->score1);
         printf("成绩2：%f\n", max_student->score2);
         printf("成绩3：%f\n", max_student->score3);
+        beauty_print();
     }
 }
 int main(int argc, char const *argv[])
@@ -79,7 +93,7 @@ int main(int argc, char const *argv[])
     Student *head = create_student();
     Student *current = head;
     int i;
-    for (size_t i = 0; i < 3; i++)
+    for ( i = 0; i < 3; i++)
     {
         /* code */
         current->next = create_student();
@@ -87,6 +101,7 @@ int main(int argc, char const *argv[])
         current = current->next;
     }
     find_max_average_student(head);
+    find_highest_aveage_score(head);
     current = head;
     while (current != NULL)
     {
