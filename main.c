@@ -56,7 +56,7 @@ void find_max_average_student(Student *head)
         printf("最高分学生信息：\n");
         printf("学号：%d\n", max_student->id);
         printf("姓名：%s\n", max_student->name);
-        printf("平均分：%f\n", max_student->average);
+        printf("三门平均分：%f\n", max_student->average);
         printf("成绩1：%f\n", max_student->score1);
         printf("成绩2：%f\n", max_student->score2);
         printf("成绩3：%f\n", max_student->score3);
