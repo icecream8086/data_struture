@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define MAX_STUDENT 3
 void beauty_print()
 {
     char line[81] = "";
@@ -25,6 +26,10 @@ typedef struct student
 Student *create_student()
 {
     Student *s = (Student *)malloc(sizeof(Student));
+    /**
+     * @brief malloc函数实际用法
+     *  类型转换,将malloc返回的指针void *转换为Student类型的指针
+     */
     s->next = NULL;
     return s;
 }
@@ -48,20 +53,19 @@ void find_max_average_student(Student *head)
     {
         if (current->average > max_student->average)
         {
-            /* code */
             max_student = current;
         }
         current = current->next;
-        beauty_print();
-        printf("最高分学生信息：\n");
-        printf("学号：%d\n", max_student->id);
-        printf("姓名：%s\n", max_student->name);
-        printf("三门平均分：%f\n", max_student->average);
-        printf("成绩1：%f\n", max_student->score1);
-        printf("成绩2：%f\n", max_student->score2);
-        printf("成绩3：%f\n", max_student->score3);
-        beauty_print();
     }
+    beauty_print();
+    printf("学生信息：\n");
+    printf("学号：%d\n", max_student->id);
+    printf("姓名：%s\n", max_student->name);
+    printf("三门平均分：%f\n", max_student->average);
+    printf("成绩1：%f\n", max_student->score1);
+    printf("成绩2：%f\n", max_student->score2);
+    printf("成绩3：%f\n", max_student->score3);
+    beauty_print();
 }
 
 void find_highest_aveage_score(Student *head)
@@ -72,36 +76,36 @@ void find_highest_aveage_score(Student *head)
     {
         if (current->average > max_student->average)
         {
-            /* code */
             max_student = current;
         }
         current = current->next;
-        beauty_print();
-        printf("最高分学生信息：\n");
-        printf("学号：%d\n", max_student->id);
-        printf("姓名：%s\n", max_student->name);
-        printf("平均分：%f\n", max_student->average);
-        printf("成绩1：%f\n", max_student->score1);
-        printf("成绩2：%f\n", max_student->score2);
-        printf("成绩3：%f\n", max_student->score3);
-        beauty_print();
     }
+    beauty_print();
+    printf("最高分学生信息：\n");
+    printf("学号：%d\n", max_student->id);
+    printf("姓名：%s\n", max_student->name);
+    printf("平均分：%f\n", max_student->average);
+    printf("成绩1：%f\n", max_student->score1);
+    printf("成绩2：%f\n", max_student->score2);
+    printf("成绩3：%f\n", max_student->score3);
+    beauty_print();
 }
+
 int main(int argc, char const *argv[])
 {
-
     Student *head = create_student();
     Student *current = head;
-    int i;
-    for ( i = 0; i < 3; i++)
+    // create
+    for (int i = 0; i < MAX_STUDENT; i++)
     {
-        /* code */
         current->next = create_student();
         input_studnets(current->next);
         current = current->next;
     }
+    // calc
     find_max_average_student(head);
     find_highest_aveage_score(head);
+    // free up
     current = head;
     while (current != NULL)
     {
@@ -109,5 +113,4 @@ int main(int argc, char const *argv[])
         current = current->next;
         free(temp);
     }
-    // free up ram
 }
