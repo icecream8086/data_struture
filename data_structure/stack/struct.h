@@ -15,11 +15,10 @@
  * 
  */
 //max_size 为地址偏移量，从0开始
-typedef struct sequence_stack
-{
-    int data[MAX_SIZE];
+typedef struct {
+    char data[MAX_SIZE];
     int top;
-}; sequence_stack;
+} sequence_stack;
 
 
 typedef struct stack_node{
