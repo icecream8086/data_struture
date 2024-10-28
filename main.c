@@ -1,88 +1,61 @@
+#include "data_structure\stack\sequence_stack.h"
+#include "data_structure\stack\struct.h"
 #include <stdio.h>
-
-#define bool int
-#define MAX_STUDENT 3
-#define MAX_SIZE 100
-
-void beauty_print()
-{
-    char line[81] = "";
-    for (int i = 0; i < 80; i++)
-    {
-        line[i] = '*';
-    }
-    printf("%s\n", line);
-}
-typedef struct
-{
-    int top;
-    int data[MAX_SIZE];
-} Stack;
-
-void init_stack(Stack *stack)
-{
-    stack->top = 0;
-}
-
-bool is_empty(Stack *stack)
-{
-    return stack->top == 0;
-}
-
-
-bool is_full(Stack *stack)
-{
-    return stack->top == MAX_SIZE;
-}
-
-
-void push(Stack *stack, int value)
-{
-    if (is_full(stack))
-    {
-        printf("Stack is full\n");
-    }else{
-            stack->data[stack->top++] = value;
+int precedence(char op) {
+    switch (op) {
+        case '+':
+        case '-':
+            return 1;
+        case '*':
+        case '/':
+            return 2;
+        case '(':
+            return 0;
+        default:
+            return -1;
     }
 }
 
-int pop(Stack *stack)
-{
-    if (is_empty(stack))
-    {
-        printf("Stack is empty\n");
-        return -1;
-    }else{
-        return stack->data[--stack->top];
+
+void infix_to_postfix(const char* infix, char* postfix) {
+     sequence_stack S;
+    init_stack(&S);
+    int j = 0;
+    for (int i = 0; i < strlen(infix); i++) {
+        char token = infix[i];
+        if (isalnum(token)) {
+            postfix[j++] = token;
+        } else if (token == '(') {
+            push(&S, token);
+        } else if (token == ')') {
+            char top_token;
+            pop(&S, &top_token);
+            while (top_token != '(') {
+                postfix[j++] = top_token;
+                pop(&S, &top_token);
+            }
+        } else {
+            char top_token;
+            while (!is_empty(&S) && precedence(get_top(&S, &top_token), token)) {
+                pop(&S, &top_token);
+                postfix[j++] = top_token;
+            }
+            push(&S, token);
+        }
     }
-}
-int get_top(Stack *stack)
-{
-    if (is_empty(stack))
-    {
-        printf("Stack is empty\n");
-        return -1;
-    }else{
-        return stack->data[stack->top - 1];
+    while (!is_empty(&S)) {
+        char top_token;
+        pop(&S, &top_token);
+        postfix[j++] = top_token;
     }
+    postfix[j] = '\0';
 }
 
-int main()
-{
-    int pop_count_0 = 0;
-    Stack stack;
-    init_stack(&stack);
-    push(&stack, 10);    
-    push(&stack, 20);    
-    push(&stack, 30);    
-    push(&stack, 40);    
-    push(&stack, 50);
-    printf("Top element: %d\n", get_top(&stack));    
-    pop_count_0 = pop(&stack);
-    if (pop_count_0!=-1)
-    {
-        printf("Pop element: %d\n", pop_count_0);
-    }
-    printf("Top element: %d\n", get_top(&stack));
-    beauty_print();
+
+int main(){
+      const char* infix = "a+b*(c^d-e)^(f+g*h)-i";
+    char postfix[100];
+    infix_to_postfix(infix, postfix);
+    printf("后缀表达式: %s\n", postfix);
+    return 0;  
 }
