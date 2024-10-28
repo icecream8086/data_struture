@@ -1,7 +1,9 @@
 #include <stdio.h>
+#define MAX 10
+#include <stdlib.h>
 
-int main(int argc, char const *argv[])
-{
-    printf("Hello World\n");
-    return 0;
-}
+#define bool int
+
+#include "data_structure\linear_table\struct.h"
+#include "data_structure\linear_table\common.h"
+#include "data_structure\linear_table\double_linklist.h"
