@@ -8,7 +8,7 @@
 #define STACK_H_API __declspec(dllimport)
 #endif
 
-#define MAX_SIZE 10
+#define MAX_SIZE 100
 
 /**
  * @brief 顺序栈

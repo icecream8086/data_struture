@@ -121,4 +121,13 @@ bool clear_stack(sequence_stack *S)
     S->top = -1;
     return 1;
 }
+/**
+ * @brief 获取栈顶元素
+ * 
+ * @param S 
+ * @return char 
+ */
+char peek(sequence_stack *S) {
+    return S->data[S->top];
+}
 #endif // !SEQUENCE_STACK_H
