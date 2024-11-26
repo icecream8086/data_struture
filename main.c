@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <limits.h>
 
 #define max_vertices 100
 #define MAX_VERTICES 100
@@ -55,8 +56,6 @@ void addEdge(Graph* graph, int src, int dest) {
     graph->vertices[dest].head = new_node;
 }
 
-
-
 // 深度优先遍历的辅助函数
 void DFSUtil(Graph* graph, int v, bool visited[]) {
     // 标记当前节点为已访问
@@ -87,7 +86,6 @@ void DFS(Graph* graph, int startVertex) {
     // 释放访问标记数组的内存
     free(visited);
 }
-
 
 // 定义队列节点
 typedef struct queue_node {
@@ -210,40 +208,62 @@ void printGraph(Graph* graph) {
     }
 }
 
+// 最短路径算法 (Dijkstra's Algorithm)
+void dijkstra(int graph[MAX_VERTICES][MAX_VERTICES], int src, int num_vertices) {
+    int dist[MAX_VERTICES]; // 存储最短距离
+    bool sptSet[MAX_VERTICES]; // sptSet[i] 为true表示顶点i已加入最短路径树
 
-int main() {
-    int num_vertices, num_edges;
-    printf("请输入顶点数: ");
-    scanf("%d", &num_vertices);
-    printf("请输入边数: ");
-    scanf("%d", &num_edges);
-
-    // 创建图
-    Graph* graph = createGraph(num_vertices);
-
-    // 从键盘输入边
-    for (int i = 0; i < num_edges; i++) {
-        int src, dest;
-        printf("请输入边 (格式: 源顶点 目标顶点): ");
-        scanf("%d %d", &src, &dest);
-        addEdge(graph, src, dest);
+    // 初始化所有距离为无穷大，sptSet[] 为 false
+    for (int i = 0; i < num_vertices; i++) {
+        dist[i] = INT_MAX;
+        sptSet[i] = false;
     }
 
-    int startVertex;
-    printf("请输入起始顶点: ");
-    scanf("%d", &startVertex);
+    // 源顶点到源顶点的距离为0
+    dist[src] = 0;
 
-    // 执行DFS
-    printf("深度优先遍历（从顶点 %d 开始）：\n", startVertex);
-    DFS(graph, startVertex);
+    // 找到最短路径树
+    for (int count = 0; count < num_vertices - 1; count++) {
+        // 选择最小距离顶点
+        int min = INT_MAX, min_index;
+        for (int v = 0; v < num_vertices; v++)
+            if (sptSet[v] == false && dist[v] <= min)
+                min = dist[v], min_index = v;
 
-    // 执行BFS
-    printf("\n广度优先遍历（从顶点 %d 开始）：\n", startVertex);
-    BFS(graph, startVertex);
+        // 将选择顶点加入最短路径树
+        int u = min_index;
+        sptSet[u] = true;
 
-    // 打印图的邻接表
-    printf("\n图的邻接表：\n");
-    printGraph(graph);
+        // 更新所有相邻顶点的距离值
+        for (int v = 0; v < num_vertices; v++)
+            if (!sptSet[v] && graph[u][v] && dist[u] != INT_MAX && dist[u] + graph[u][v] < dist[v])
+                dist[v] = dist[u] + graph[u][v];
+    }
+
+    // 打印最短路径
+    printf("顶点到各个顶点的最短距离如下:\n");
+    for (int i = 0; i < num_vertices; i++)
+        printf("顶点%d: %d\n", i, dist[i]);
+}
+
+int main() {
+    int num_vertices;
+    printf("输入定点数: ");
+    scanf("%d", &num_vertices);
+
+    int graph[MAX_VERTICES][MAX_VERTICES];
+    printf("按邻接矩阵形式输入图的边权重，无边用0表示:\n");
+    for (int i = 0; i < num_vertices; i++) {
+        for (int j = 0; j < num_vertices; j++) {
+            scanf("%d", &graph[i][j]);
+        }
+    }
+
+    int src;
+    printf("输入源点(顶点编号从0开始): ");
+    scanf("%d", &src);
+
+    dijkstra(graph, src, num_vertices);
 
     return 0;
 }
