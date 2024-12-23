@@ -1,6 +1,6 @@
 /**
  * @file money.c
- * @author your name (icecream8086@outlook.com)
+ * @author icecream8086 (icecream8086@outlook.com)
  * @brief 测试用例，货币
  * @version 0.1
  * @date 2024-12-23
