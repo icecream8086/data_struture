@@ -1,6 +1,6 @@
 /**
  * @file ref.h
- * @author your name (icecream8086@outlook.com)
+ * @author icecream8086 (icecream8086@outlook.com)
  * @brief 结构体定义
  * @version 0.1
  * @date 2024-12-23
