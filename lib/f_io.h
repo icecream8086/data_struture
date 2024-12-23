@@ -22,9 +22,57 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
 #include "ref.h"
 #include "f_io.h"
+/**
+ * @brief 从文件加载用户数据
+ * 
+ * @param arr 
+ * @param filename 
+ */
+void loadUsersFromFile(struct UserArray* arr, const char* filename);
+
+/**
+ * @brief 保存用户数据到文件
+ * 
+ * @param arr 
+ * @param filename 
+ */
+void saveUsersToFile(const struct UserArray* arr, const char* filename);
+
+/**
+ * @brief 根据名字查找用户
+ * 
+ * @param arr 
+ * @param name 
+ * @return struct User* 
+ */
+struct User* findUserByName(const struct UserArray* arr, const char* name);
+
+/**
+ * @brief 根据名字删除用户
+ * 
+ * @param arr 
+ * @param name 
+ */
+void deleteUserByName(struct UserArray* arr, const char* name);
+
+/**
+ * @brief 根据账户查找用户
+ * 
+ * @param arr 
+ * @param account 
+ * @return struct User* 
+ */
+struct User* findUserByAccount(const struct UserArray* arr, const char* account);
+
+/**
+ * @brief 根据账户删除用户
+ * 
+ * @param arr 
+ * @param account 
+ */
+void deleteUserByAccount(struct UserArray* arr, const char* account);
 /**
  * @brief 从文件加载用户数据
  * 
@@ -103,8 +151,6 @@ void deleteUserByName(struct UserArray* arr, const char* name) {
         }
     }
 }
-
-
 /**
  * @brief 根据账户查找用户
  * 
