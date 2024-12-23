@@ -1,24 +1,32 @@
 /**
- * @file bank_db.h
+ * @file dynamic_array.c
  * @author icecream8086 (icecream8086@outlook.com)
- * @brief 模拟数据库
+ * @brief 动态数组参考
  * @version 0.1
  * @date 2024-12-23
  * 
  * @copyright Copyright (c) 2024
  * 
  */
-#ifndef BANK_DB_H
-#define BANK_DB_H
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-#ifdef BANK_DB_EXPORTS
-#define BANK_DB_API __declspec(dllexport)
-#else
-#define BANK_DB_API __declspec(dllimport)
-#endif
+struct Money {
+    long long cents;
+};
 
-//code
-#include ".\ref.h"
+struct User {
+    char name[50];
+    char account[50];
+    struct Money money;
+};
+
+struct UserArray {
+    struct User* users;
+    size_t size;
+    size_t capacity;
+};
 
 void initUserArray(struct UserArray* arr) {
     arr->size = 0;
@@ -79,6 +87,33 @@ void printAllUsers(const struct UserArray* arr) {
     }
 }
 
-#endif // BANK_DB_H
+int main() {
+    struct UserArray users;
+    initUserArray(&users);
 
-// 动态扩容的结构体数组
+    struct User user1 = {"Alice", "alice123", {10050}};
+    struct User user2 = {"Bob", "bob456", {20075}};
+
+    addUser(&users, user1);
+    addUser(&users, user2);
+
+    printAllUsers(&users);
+
+    struct User* foundUser = findUser(&users, "alice123");
+    if (foundUser) {
+        printf("Found user:\n");
+        printUser(foundUser);
+    }
+
+    struct User userUpdated = {"Alice", "alice123", {50000}};
+    updateUser(&users, userUpdated);
+
+    printAllUsers(&users);
+
+    removeUser(&users, "bob456");
+    printAllUsers(&users);
+
+    free(users.users);
+
+    return 0;
+}
