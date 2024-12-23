@@ -28,7 +28,9 @@ struct Money {
 struct User {
     char name[50];
     char account[50];
-    struct Money money;
+    struct {
+        long long cents;
+    } money;
 };
 
 struct UserArray {

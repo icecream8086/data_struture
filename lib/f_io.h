@@ -19,8 +19,12 @@
 #endif
 
 //code
-#include ".\ref.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
+#include "ref.h"
+#include "f_io.h"
 /**
  * @brief 从文件加载用户数据
  * 

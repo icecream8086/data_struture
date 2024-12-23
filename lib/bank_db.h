@@ -1,11 +1,12 @@
 /**
  * @file bank_db.h
- * @author icecream8086
+ * @author icecream8086 (icecream8086@outlook.com)
  * @brief 模拟数据库
  * @version 0.1
  * @date 2024-12-23
  * 
  * @copyright Copyright (c) 2024
+ * 
  */
 #ifndef BANK_DB_H
 #define BANK_DB_H
@@ -16,11 +17,23 @@
 #define BANK_DB_API __declspec(dllimport)
 #endif
 
-#include ".\ref.h"
-#include ".\f_io.h"
+//code
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "ref.h"
 
-// Function prototypes
+void initUserArray(struct UserArray* arr);
+void resizeUserArray(struct UserArray* arr);
+void addUser(struct UserArray* arr, struct User user);
+struct User* findUser(struct UserArray* arr, const char* account);
+void removeUser(struct UserArray* arr, const char* account);
+void updateUser(struct UserArray* arr, struct User user);
+void printUser(const struct User* user);
+void printAllUsers(const struct UserArray* arr);
+void loadUsersFromFile(struct UserArray* arr, const char* filename);
 void saveUsersToFile(const struct UserArray* arr, const char* filename);
+
 
 void initUserArray(struct UserArray* arr) {
     arr->size = 0;
@@ -38,7 +51,6 @@ void addUser(struct UserArray* arr, struct User user) {
         resizeUserArray(arr);
     }
     arr->users[arr->size++] = user;
-    saveUsersToFile(arr, "users.csv"); // Save changes to file
 }
 
 struct User* findUser(struct UserArray* arr, const char* account) {
@@ -57,7 +69,6 @@ void removeUser(struct UserArray* arr, const char* account) {
                 arr->users[j] = arr->users[j + 1];
             }
             arr->size--;
-            saveUsersToFile(arr, "users.csv"); // Save changes to file
             return;
         }
     }
@@ -67,7 +78,6 @@ void updateUser(struct UserArray* arr, struct User user) {
     struct User* existingUser = findUser(arr, user.account);
     if (existingUser) {
         *existingUser = user;
-        saveUsersToFile(arr, "users.csv"); // Save changes to file
     }
 }
 
@@ -85,3 +95,5 @@ void printAllUsers(const struct UserArray* arr) {
 }
 
 #endif // BANK_DB_H
+
+// 动态扩容的结构体数组
