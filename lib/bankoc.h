@@ -17,7 +17,7 @@
 #define BANKOC_API __declspec(dllimport)
 #endif
 
-#include ".\ref.h"
+#include "./ref.h"
 #include <stdio.h>
 #include <math.h>
 /**
