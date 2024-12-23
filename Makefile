@@ -11,7 +11,7 @@ SRCS = main.c
 OBJS = $(SRCS:.c=.o)
 
 # Executable name
-TARGET = ./main.exe
+TARGET = ./main
 
 # Default target
 all: $(TARGET)
