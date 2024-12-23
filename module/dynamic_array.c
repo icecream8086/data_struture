@@ -1,26 +1,32 @@
 /**
- * @file bank_db.h
- * @author icecream8086
- * @brief 模拟数据库
+ * @file dynamic_array.c
+ * @author icecream8086 (icecream8086@outlook.com)
+ * @brief 动态数组参考
  * @version 0.1
  * @date 2024-12-23
  * 
  * @copyright Copyright (c) 2024
+ * 
  */
-#ifndef BANK_DB_H
-#define BANK_DB_H
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-#ifdef BANK_DB_EXPORTS
-#define BANK_DB_API __declspec(dllexport)
-#else
-#define BANK_DB_API __declspec(dllimport)
-#endif
+struct Money {
+    long long cents;
+};
 
-#include ".\ref.h"
-#include ".\f_io.h"
+struct User {
+    char name[50];
+    char account[50];
+    struct Money money;
+};
 
-// Function prototypes
-void saveUsersToFile(const struct UserArray* arr, const char* filename);
+struct UserArray {
+    struct User* users;
+    size_t size;
+    size_t capacity;
+};
 
 void initUserArray(struct UserArray* arr) {
     arr->size = 0;
@@ -38,7 +44,6 @@ void addUser(struct UserArray* arr, struct User user) {
         resizeUserArray(arr);
     }
     arr->users[arr->size++] = user;
-    saveUsersToFile(arr, "users.csv"); // Save changes to file
 }
 
 struct User* findUser(struct UserArray* arr, const char* account) {
@@ -57,7 +62,6 @@ void removeUser(struct UserArray* arr, const char* account) {
                 arr->users[j] = arr->users[j + 1];
             }
             arr->size--;
-            saveUsersToFile(arr, "users.csv"); // Save changes to file
             return;
         }
     }
@@ -67,7 +71,6 @@ void updateUser(struct UserArray* arr, struct User user) {
     struct User* existingUser = findUser(arr, user.account);
     if (existingUser) {
         *existingUser = user;
-        saveUsersToFile(arr, "users.csv"); // Save changes to file
     }
 }
 
@@ -84,4 +87,33 @@ void printAllUsers(const struct UserArray* arr) {
     }
 }
 
-#endif // BANK_DB_H
+int main() {
+    struct UserArray users;
+    initUserArray(&users);
+
+    struct User user1 = {"Alice", "alice123", {10050}};
+    struct User user2 = {"Bob", "bob456", {20075}};
+
+    addUser(&users, user1);
+    addUser(&users, user2);
+
+    printAllUsers(&users);
+
+    struct User* foundUser = findUser(&users, "alice123");
+    if (foundUser) {
+        printf("Found user:\n");
+        printUser(foundUser);
+    }
+
+    struct User userUpdated = {"Alice", "alice123", {50000}};
+    updateUser(&users, userUpdated);
+
+    printAllUsers(&users);
+
+    removeUser(&users, "bob456");
+    printAllUsers(&users);
+
+    free(users.users);
+
+    return 0;
+}
