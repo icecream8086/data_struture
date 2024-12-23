@@ -6,7 +6,7 @@
 C:.
 │   .gitignore
 │   License
-│   main.c
+│   main.c #main 函数
 │   Makefile
 │
 ├───.vscode
@@ -14,7 +14,7 @@ C:.
 │       settings.json
 │       tasks.json
 │
-├───bin
+├───bin # 如果有的话，二进制文件存放区
 ├───lib # 库
 │       bankoc.h #金融操作
 │       bank_db.h #模拟数据库
@@ -24,7 +24,7 @@ C:.
 │       ref.h #宏定义
 │
 └───module
-        count.c
-        money.c
+        count.c #中文utf8 参考
+        money.c #货币
 
 ```
