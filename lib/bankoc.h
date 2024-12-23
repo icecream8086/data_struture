@@ -17,9 +17,62 @@
 #define BANKOC_API __declspec(dllimport)
 #endif
 
-#include ".\ref.h"
+#include "./ref.h"
 #include <stdio.h>
 #include <math.h>
+/**
+ * @brief 创建货币
+ * 
+ * @param yuan 
+ * @param cents 
+ * @return struct Money 
+ */
+struct Money createMoney(int yuan, int cents);
+
+/**
+ * @brief 格式化输出货币信息
+ * 
+ * @param m 
+ */
+void printMoney(struct Money m);
+
+/**
+ * @brief 货币加法
+ * 
+ * @param m1 
+ * @param m2 
+ * @return struct Money 
+ */
+struct Money addMoney(struct Money m1, struct Money m2);
+
+/**
+ * @brief 货币减法
+ * 
+ * @param m1 
+ * @param m2 
+ * @return struct Money 
+ */
+struct Money subtractMoney(struct Money m1, struct Money m2);
+
+/**
+ * @brief 货币乘法
+ * 
+ * @param m 
+ * @param factor 
+ * @return struct Money 
+ */
+struct Money multiplyMoney(struct Money m, double factor);
+
+/**
+ * @brief 货币除法
+ * 
+ * @param m 
+ * @param divisor 
+ * @param remainder 
+ * @return struct Money 
+ */
+struct Money divideMoney(struct Money m, double divisor, int* remainder);
+
 
 /**
  * @brief 创建货币
