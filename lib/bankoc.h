@@ -44,6 +44,7 @@ void printMoney(struct Money m);
  * @return struct Money 
  */
 struct Money addMoney(struct Money m1, struct Money m2);
+int transferMoney(struct User *from, struct User *to, struct Money amount, struct UserArray* updatedUsers) ;
 
 /**
  * @brief 货币减法
@@ -150,5 +151,33 @@ struct Money divideMoney(struct Money m, double divisor, int* remainder) {
     *remainder = (int)round((temp_result - result.cents) * divisor);
     return result;
 }
+
+int transferMoney(struct User *from, struct User *to, struct Money amount, struct UserArray* updatedUsers) {
+    // 检查余额是否足够
+    if (from->money.cents < amount.cents)
+    {
+        printf("余额不足，无法完成转账。\n");
+        return 0;
+    }
+
+    // 执行转账
+    from->money.cents -= amount.cents;
+    to->money.cents += amount.cents;
+
+    printf("成功转账 ¥%lld.%02lld 从 %s 到 %s\n", amount.cents / 100, amount.cents % 100, from->name, to->name);
+
+    // 更新用户数组
+    for (size_t i = 0; i < updatedUsers->size; i++) {
+        if (strcmp(updatedUsers->users[i].account, from->account) == 0) {
+            updatedUsers->users[i].money = from->money;
+        }
+        if (strcmp(updatedUsers->users[i].account, to->account) == 0) {
+            updatedUsers->users[i].money = to->money;
+        }
+    }
+
+    return 1;
+}
+
 
 #endif // REF_H
