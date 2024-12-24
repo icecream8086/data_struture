@@ -43,6 +43,7 @@ void interpretAST(ASTNode *node)
                     int num1 = atoi(arg1->value);
                     int num2 = atoi(arg2->value);
                     printf("Sum: %d\n", num1 + num2);
+                    //wdawdawd
                 }
                 else
                 {
